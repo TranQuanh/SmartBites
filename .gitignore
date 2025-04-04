@@ -1,6 +1,6 @@
 WeeklyReport/doc_weekly-report/
 
-source code/model/data
-source code/model/recipe_final.csv
-source code/model/venv
-source code/model/raw-data-images
+source code/Backend_web/model/data
+source code/Backend_web/model/recipe_final.csv
+source code/Backend_web/venv
+source code/Backend_web/model/raw-data-images
