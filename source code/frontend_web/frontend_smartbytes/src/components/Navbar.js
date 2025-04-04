@@ -1,5 +1,8 @@
 import './Navbar.scss';
+import {useState} from 'react';
 function Navbar(){
+    const [showSidebar, setShowSidebar] = useState(false);
+
     return(
         <>
             <div className="navbar container">
@@ -12,6 +15,11 @@ function Navbar(){
                     <a href="#">Recipes</a>
                     <a href="#">Recomendation</a>
                     <a href = "#">Settings</a>
+                </div>
+                <div className={showSidebar ? "navbar__button active" : "navbar__button"} onClick={() => setShowSidebar(!showSidebar)}>
+                    <div className = "bar"> </div>
+                    <div className = "bar"> </div>
+                    <div className = "bar"> </div>
                 </div>
             </div>
         </>

@@ -9,6 +9,10 @@
     --font-size: 16px;
     --animation-speed: 1;
   }
+
+@function getAnimationDuration ($duration:number){
+    @return calc($duration * var(--animation-speed));
+} 
 *{
     margin:0;
     padding:0;
