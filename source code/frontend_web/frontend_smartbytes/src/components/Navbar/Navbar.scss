@@ -1,4 +1,4 @@
-@import "../styles/index.scss";
+@import "../../styles/index.scss";
 
 .navbar {
     height: 55px;
@@ -26,6 +26,7 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             position: relative;
+            font-size: 0.9em;
             &::before{
                 content: '';
                 display: inline-block;
