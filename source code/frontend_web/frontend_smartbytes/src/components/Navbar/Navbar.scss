@@ -1,0 +1,109 @@
+@import "../../styles/index.scss";
+
+.navbar {
+    height: 55px;
+    box-shadow: 0 3px 6px var(--shadow-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__logo {
+        font-size: 1.5em;
+        font-weight: bolder;
+        color: var(--primary-color);
+        text-shadow: 0 1px 3px var(--shadow-color);
+        span {
+            color: var(--text-color);
+        }
+    }
+
+    &__menu{
+        a{
+            color: var(--text-light);
+            margin-left: 1em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            font-size: 0.9em;
+            &::before{
+                content: '';
+                display: inline-block;
+                position: absolute;
+                height: 3px;
+                width: 100%;
+                background-color: var(--primary-color);
+                bottom: -5px;
+                left: 0;
+                transform: scaleX(0);
+                transition: getAnimationDuration(0.3s) ease-in-out;
+            }
+            &:hover{
+                &::before{
+                    transform: scaleX(1);
+                }
+            }
+            &.active{
+                color: var(--primary-color);
+                font-weight: bolder;
+            }
+        }
+    }
+    &__button{
+        display: none;
+        // border-radius: 5px;
+        height: 28px;
+        width: 30px;
+        position: relative;
+        .bar{
+            border-radius: 5px;
+            height: 6px;
+            width: 100%;
+            background-color: var(--text-color);
+            position: absolute;
+            transition: getAnimationDuration(0.5s) ease-in-out;
+            &:nth-child(1){
+                top:0;
+            }
+            &:nth-child(2){
+                top: 50%;
+                transform-origin: right ;
+                transform: scaleX(.8)translateY(-50%);
+
+            }
+            &:nth-child(3){
+                top: 100%;
+                transform-origin:right;
+                transform: scaleX(1.1) translateY(-100%);
+            }
+        }
+    &.active{
+        .bar{
+            transform-origin: center;
+            top: 50%;
+            &:nth-child(1){
+                transform: translate(0,-50%) rotate(45deg) ;
+            }
+            &:nth-child(2){
+                transform: scaleX(0);
+            }
+            &:nth-child(3){
+                transform: translate(0,-50%)  rotate(-45deg) ;
+            }
+        }
+    }    
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        &__menu {
+            display: none;
+        }
+        &__button {
+            display: block;
+        }
+    }
+}

@@ -1,0 +1,69 @@
+@import "../../styles/index.scss";
+@import "../../styles/partials/animations.scss";
+.section{
+    .title{
+        color: var(--text-color);
+        font-size: 2.5em;
+        margin-bottom: .25em;
+        font-weight: 900;
+    }
+    .info{
+        color: var(--text-light);
+        font-size: 1em;
+        letter-spacing: 1px;
+        line-height: 1.3em;
+        margin-bottom: 1.2em;
+    }
+    .col{
+        width: 50%;
+    }
+}
+
+// Hero Section
+.section.hero{
+    .typography{
+        padding-right: 1em;
+    }
+    .gallery{
+        display:grid;
+        grid-template-columns: repeat(3,1fr);
+        gap:  1.75vw;
+        
+    }
+}
+
+// End Hero Section
+
+// Improskills
+.section.improveskills{
+    .col.img{
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+    }
+    .col.typography{
+        padding-left: 1em;
+        .skill-item{
+            border-left: .2em solid var(--primary-color);
+            margin-bottom: .5em;
+            padding: .1em 0 .1em .5em;
+            color: var(--text-light);
+            font-weight: bold;
+            transform: translateX(100%);
+            opacity: 0;
+            animation: getAnimationDuration(.3s) SlideInRight forwards;
+            @for $i from 2 through 7{
+                &:nth-child(#{$i}){
+                    animation-delay: #{$i*0.1}s;
+                }
+            }
+        }
+        .btn{
+            margin-top: .75em;
+        }
+    }
+}
+// End Improskills
