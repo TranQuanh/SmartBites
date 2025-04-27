@@ -2,13 +2,12 @@
 @import "../../styles/partials/animations.scss";
 .section{
     .title{
-        color: var(--text-color);
         font-size: 2.5em;
         margin-bottom: .25em;
         font-weight: 900;
     }
     .info{
-        color: var(--text-light);
+        color: var(--on-background-variant);
         font-size: 1em;
         letter-spacing: 1px;
         line-height: 1.3em;
@@ -30,6 +29,13 @@
         gap:  1.75vw;
         
     }
+    .btn{
+        transition: background-color 0.3s ease;
+        color: var(--badge-btn);
+        &:hover{
+            background-color: var(--primary-hover);
+        }
+    }
 }
 
 // End Hero Section
@@ -47,10 +53,10 @@
     .col.typography{
         padding-left: 1em;
         .skill-item{
-            border-left: .2em solid var(--primary-color);
+            border-left: .2em solid var(--primary);
             margin-bottom: .5em;
             padding: .1em 0 .1em .5em;
-            color: var(--text-light);
+            color: var(--on-background-variant);
             font-weight: bold;
             transform: translateX(100%);
             opacity: 0;
@@ -63,6 +69,11 @@
         }
         .btn{
             margin-top: .75em;
+            transition: background-color 0.3s ease;
+            color: var(--badge-btn);
+            &:hover{
+                background-color: var(--primary-hover);
+            }
         }
     }
 }

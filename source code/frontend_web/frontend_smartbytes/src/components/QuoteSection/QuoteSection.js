@@ -1,5 +1,5 @@
 import './QuoteSection.scss';
-import { FaQuoteLeft } from "react-icons/fa6";
+import { FaQuoteLeft,FaQuoteRight } from "react-icons/fa6";
 
 function QuoteSection(){
     return(
@@ -10,6 +10,7 @@ function QuoteSection(){
                 Food is everything we are. It's an extension of nationalist feeling,
                 ethnic feeling, your personal history, your province, your region, your tribe, your grandma.
                 It's inseparable from those from the get-go.
+                <div className="quote-right"><FaQuoteRight /></div>
             </p>
             <p className="quote-author">- Anthony Bourdain</p>
         </div>

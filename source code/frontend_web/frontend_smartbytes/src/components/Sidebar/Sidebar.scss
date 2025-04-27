@@ -6,7 +6,7 @@
     left: 0;
     height: 100vh;
     width: 250px;
-    background-color: var(--background-color);
+    background-color: var(--primary-container);
     box-shadow: 0 0 0 1000px rgba(0,0,0,0.2),
                 3px 0 5px var(--shadow-color);
     transform: translate(-100%);
@@ -17,7 +17,7 @@
         padding: 1em;
         border-left: 0.3em solid transparent;
         margin-bottom: 1em;
-        color: var(--text-color);
+        color: var(--on-background-variant);
         font-weight: bold;
         font-size: 1.1em;
         transform: translate(-100%);
@@ -28,10 +28,11 @@
             }
         }
         &.active{
-            border-left-color: var(--primary-color);
+            border-left-color: var(--primary);
         }
         &:hover{
-            border-left-color: var(--primary-color);
+            border-left-color: var(--primary-hover);
+            background-color: var(--alpha-10);
             background: rgba(0,0,0,0.05);
             transition: all 0.3s ease-in-out;
         }
@@ -41,3 +42,8 @@
         }
     }
 }
+@media screen and (min-width: 769px) {
+    .sidebar {
+      display: none; /* Ẩn sidebar khi màn hình lớn hơn 768px */
+    }
+  }
