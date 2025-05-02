@@ -5,7 +5,7 @@ import Settings from "./pages/Setting/Settings";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LayoutDefault from "./pages/layout/LayoutDefault/LayoutDefault";
 import "./styles/index.scss"; // Import file CSS chứa định nghĩa theme
-
+import Error404 from "./pages/Error404/Error404";
 function App() {
   // Khởi tạo theme từ localStorage hoặc mặc định là "light"
   localStorage.removeItem("theme");
@@ -31,6 +31,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/recipes" element={<Recipes />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="*" element={<Error404 />} />
           </Route>
         </Routes>
       </Router>

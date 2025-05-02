@@ -1,10 +1,11 @@
+import Error404Func from '../../components/Error404Func/Error404Func';
+
 function Error404() {
-    return (
-        <div className="error404">
-            <h1>404</h1>
-            <h2>Page Not Found</h2>
-            <p>The page you are looking for does not exist.</p>
-        </div>
-    );
+  return (
+    <div className="error-404-container">
+      <Error404Func />
+    </div>
+  );
 }
+
 export default Error404;
