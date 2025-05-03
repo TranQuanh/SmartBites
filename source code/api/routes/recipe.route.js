@@ -24,16 +24,26 @@ router.get("/", async (req, res) => {
       res.status(500).json({ message: "Error retrieving recipes", error: error.message });
     }
   });
+
+
 router.get("/:id", async (req, res) => {
-    try {
-      const recipe = await Recipe.findOne({ recipe_id: req.params.id });
-      if (!recipe) {
-        return res.status(404).json({ message: "Recipe not found" });
-      }
-      res.status(200).json(recipe);
-    } catch (error) {
-      res.status(500).json({ message: "Error retrieving recipe", error: error.message });
+  try {
+    const recipeId = parseInt(req.params.id); // Chuyển chuỗi thành số
+    if (isNaN(recipeId)) {
+      return res.status(400).json({ message: "Invalid recipe_id" });
     }
+    console.log('Querying recipe_id:', recipeId, 'Type:', typeof recipeId);
+    const recipe = await Recipe.findOne({ recipe_id: recipeId }); // Truy vấn với số
+    // console.log('Query result:', recipe);
+    if (!recipe) {
+      console.log('No recipe found for recipe_id:', recipeId);
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+    res.status(200).json(recipe); // Trả về toàn bộ tài liệu
+  } catch (error) {
+    console.error('Error retrieving recipe:', error.stack);
+    res.status(500).json({ message: "Error retrieving recipe", error: error.message });
+  }
 });
 
 module.exports = router;

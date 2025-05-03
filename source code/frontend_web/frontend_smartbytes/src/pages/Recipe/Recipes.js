@@ -1,7 +1,8 @@
+import FilterBar from "../../components/FilterBar/FilterBar";
 function Recipes(){
     return(
         <>
-            Recipes Pages
+         <FilterBar/>
         </>
     )
 }

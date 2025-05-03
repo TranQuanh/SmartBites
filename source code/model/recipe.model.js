@@ -21,7 +21,7 @@ const reviewSchema = new mongoose.Schema({
 
 const recipeSchema = new mongoose.Schema({
   _id: { type: String, required: true },
-  recipe_id: { type: String, required: true },
+  recipe_id: { type: Number, required: true },
   recipe_name: { type: String, required: true },
   average_rating: { type: Number, default: 0 },
   image_url: { type: String },

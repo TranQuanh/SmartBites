@@ -7,17 +7,18 @@
     // font size
     --fs-base: 62.5%;
     /* Thiết lập font size cơ bản */
-    --fs-display-large: 3.6rem;
+    --fs-display-large: 3.2rem;
     --fs-display-medium: 2.8rem;
     --fs-display-small: 2.6rem;
     --fs-headline-small: 2.4rem;
     --fs-title-large: 3.2rem;
     --fs-title-medium: 2.4rem;
+    --fs-title-small: 1.6rem;
     --fs-body-large: 1.8rem;
     --fs-body-medium: 1.4rem;
-    --fs-label-large: 1.8rem;
-    --fs-label-medium: 1.4rem;
-    --fs-label-small: 1.2rem;
+    --fs-label-large: 1.4rem;
+    --fs-label-medium: 1.2rem;
+    --fs-label-small: 1.1rem;
 
     // font weight 
     --weight-regular: 400;
@@ -319,7 +320,31 @@ main {
     align-items: center;
     margin-bottom: 2vw;
 }
-
+.has-state {
+    position: relative;
+    overflow: hidden;
+  }
+  
+.has-state::after {
+content: "";
+position: absolute;
+inset: 0;
+transition: var(--transition-short);
+}
+.has-state:where(:hover, :focus-visible):not(:active)::after {
+background-color: var(--alpha-10);
+}
+.material-symbols-outlined {
+    display: block;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+  }
 @media screen and (max-width:1280px) {
     .container {
         padding-inline: 18vw;
