@@ -4,6 +4,8 @@
     --header-height: 64px;
     --mobile-nav-height: 80px;
     --section-gap: 32px;
+    --white: hsl(0,0%,100%);
+    --overlay-bg: hsla(0,3%,13%,0.5);
     // font size
     --fs-base: 62.5%;
     /* Thiết lập font size cơ bản */
@@ -168,7 +170,6 @@ button {
     color: inherit;
     cursor: pointer;
 }
-
 html {
     font-size: var(--fs-base);
     font-family: "Roboto", sans-serif;
@@ -289,8 +290,15 @@ main {
 .main {
     padding-block: 1vw;
 }
-
-.btn {
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+.content {
+    flex: 1 0 auto; /* Cho phép nội dung co giãn, đẩy footer xuống dưới */
+}
+.btn{
     font-size: var(--fs-label-large);
     display: flex;
     align-items: center;
@@ -298,8 +306,6 @@ main {
     gap: 0.5rem;
     border: none;
     outline: none;
-    background-color: var(--primary);
-    color: var(--on-background);
     padding: .75em 1em;
     border-radius: 5px;
     cursor: pointer;
@@ -308,11 +314,22 @@ main {
     letter-spacing: 1px;
     border-radius: 3px;
     box-shadow: 0px 2px 6px var(--shadow-color);
-    transition: background-color 0.3s ease;
 
     &:hover {
         box-shadow: 0 1px 3px var(--shadow-color)
     }
+}
+.btn-primary{
+    background-color: var(--primary);
+    transition: (background-color) 0.3s ease;
+    color: var(--badge-btn);
+    &:hover{
+        background-color: var(--primary-hover);
+        color: var(--on-badge-btn);
+    }
+}
+.btn-secondary{
+    background-color: var(--primary-container);
 }
 
 .section {
@@ -344,7 +361,14 @@ background-color: var(--alpha-10);
       'wght' 400,
       'GRAD' 0,
       'opsz' 24;
-  }
+}
+.icon-btn{
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-circle);
+}
 @media screen and (max-width:1280px) {
     .container {
         padding-inline: 18vw;

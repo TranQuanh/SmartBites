@@ -1,8 +1,9 @@
-import FilterBar from "../../components/FilterBar/FilterBar";
+import RecipeList from "../../components/RecipeList/RecipeList";
 function Recipes(){
     return(
         <>
-         <FilterBar/>
+                <RecipeList/>
+
         </>
     )
 }

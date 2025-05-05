@@ -1,6 +1,7 @@
 @import "../../styles/index.scss";
 
 .footer{
+    flex-shrink: 0; /* Ngăn footer bị co lại */
     background-color: #0f0f0f ;
     color: #fff;
     padding-block: 2em;

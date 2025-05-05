@@ -31,7 +31,7 @@ function HeroSection() {
           SmartByte is a place where you can please your soul and tummy with selicious food recepies of all cuisine.
           And our service is absolutely free. So start exploring now.
         </p>
-        <button className = "btn">EXPLORE NOW</button>
+        <button className = "btn btn-primary">EXPLORE NOW</button>
       </div>
       <div className = "col gallery">
         {images.map((src,index)=>(
@@ -51,7 +51,7 @@ function HeroSection() {
         {List.map((item,index)=>(
           <p className = "skill-item" key={index}>{item}</p>
         ))}
-        <button className = "btn">signup now</button>
+        <button className = "btn btn-primary">SIGN UP NOW</button>
       </div>
     </div>
     </>

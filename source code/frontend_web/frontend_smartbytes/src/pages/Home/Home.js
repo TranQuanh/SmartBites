@@ -6,9 +6,9 @@ import HeroSearch from "../../components/HeroSearch/HeroSearch";
 export default function Home() {
     return(
         <>
-            <HeroSection/>
-            <QuoteSection/>
-            <HeroSearch/>
+                <HeroSection/>
+                <QuoteSection/>
+                <HeroSearch/>
         </>
     )
 }

@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 function Sidebar({links,close}){
     return(
         <>
+            <div className="sidebar__overlay" onClick={close}></div>
             <div className = "sidebar" onClick={close}>
                 {links.map(link=>(
                     <NavLink to={link.path} key={link.name} className="sidebar__link">

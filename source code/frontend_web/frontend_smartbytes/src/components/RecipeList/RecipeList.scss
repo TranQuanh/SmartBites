@@ -1,0 +1,38 @@
+@import "../../styles/index.scss";
+.overlay{
+    position:fixed;
+    inset: 0;
+    background-color: var(--overlay-bg);
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-short);
+    z-index: 5;
+}
+.overlay.active{
+    opacity: 1;
+    pointer-events: all;
+}
+.recipe-container{
+    padding-bottom: 36px;
+    padding-top: 36px;
+    .title-wrapper{
+        height: 40px;
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+
+        .btn-filter{
+            padding-inline: 12px;
+            .wrapper{
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+
+    }
+    .grid-list{
+        position: relative;
+    }
+}
