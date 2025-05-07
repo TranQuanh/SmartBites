@@ -1,17 +1,4 @@
 @import "../../styles/index.scss";
-.overlay{
-    position:fixed;
-    inset: 0;
-    background-color: var(--overlay-bg);
-    opacity: 0;
-    pointer-events: none;
-    transition: var(--transition-short);
-    z-index: 5;
-}
-.overlay.active{
-    opacity: 1;
-    pointer-events: all;
-}
 .recipe-container{
     padding-bottom: 36px;
     padding-top: 36px;
@@ -30,9 +17,44 @@
                 gap: 8px;
             }
         }
-
+        .btn-filter.active {
+            position: fixed;
+            bottom: calc(var(--mobile-nav-height) + 16px);
+            right: 16px;
+            z-index: 1;
+            box-shadow: var(--shadow-2);
+            border-radius: var(--radius-8);
+            height: 48px;
+            padding-inline: 16px;
+            gap: 12px;
+            transition: none;
+            animation: btn-filter-active 200ms var(--transition-timing-function) forwards;
+          }
+        @keyframes btn-filter-active {
+            0% {
+              transform: scale(0.5);
+              opacity: 0;
+            }
+            100% {
+              transform: scale(1);
+              opacity: 1;
+            }
+          }
     }
     .grid-list{
         position: relative;
+    }
+    .load-more{
+        position: relative;
+        margin-top: 8px;
+        align-items: center;
+        .info-text{
+            position: absolute;
+            top:0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: var(--weigth-medium);
+            opacity: 0.7;
+        }
     }
 }

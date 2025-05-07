@@ -2,7 +2,7 @@
 .filter-bar{
     position: fixed;
     top: 0;
-    right: -400px;
+    right: 0;
     background-color: var(--background);
     max-width: 400px;
     width: 100%;
@@ -10,7 +10,9 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    visibility: hidden;
+    transform: translate(100%);
+    animation: getAnimationDuration(0.3s) SlideInRight forwards;
+    // visibility: hidden;
     transition: var(--transition-short);
     z-index: 6;
     .title-wrapper{
@@ -174,9 +176,4 @@
         }
 
     }
-}
-.filter-bar.active{
-    visibility: visible;
-    transform: translateX(-400px);
-    transition: var(--transition-medium);
 }

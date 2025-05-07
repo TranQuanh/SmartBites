@@ -5,30 +5,80 @@ import { IoTimer } from "react-icons/io5";
 import { MdExpandMore } from "react-icons/md";
 import { PiCookingPotFill } from "react-icons/pi";
 import { MdEnergySavingsLeaf } from "react-icons/md";
-function FilterBar(){
+import { useState } from "react";
+function FilterBar({close}){
+    const [expanded, setExpanded] = useState({
+        "cook-time": false,
+        "ingr": false,
+        "calories": false,
+      });
+    
+      // Hàm toggle cho accordion
+      const toggleAccordion = (section) => {
+        setExpanded((prev) => ({
+          ...prev,
+          [section]: !prev[section], // Toggle true/false cho section tương ứng
+        }));
+      };
+
+      const getSelectedFilterFromDiv = (div) =>{
+        const selectedFilter = div.querySelector('input[type="radio"]:checked');
+        if (selectedFilter) {
+            return [selectedFilter.name, selectedFilter.value];
+        }
+        return null; // H
+      };
+
+      const applyFilter = () => {
+        const selected = [];
+        const searchInput = document.querySelector('input[type="search"]');
+        const searchValue = searchInput?.value.trim();
+        if (searchValue) {
+            selected.push(["q", searchValue]);
+        }
+        const filterDivs = document.querySelectorAll('.accordion-overflow[data-filter]');
+        filterDivs.forEach((div) => {
+            const filter = getSelectedFilterFromDiv(div);
+            if (filter) {
+                selected.push(filter);
+            }
+        }); 
+        const queryString = selected.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+
+        console.log( queryString);
+    }; 
+
+    const clearFilters = () => {
+        const searchInput = document.querySelector('input[type="search"]');
+        if (searchInput) searchInput.value = "";
+        const radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach((radio) => (radio.checked = false));
+    };
+
     return(
         <>
+            <div className= "overlay active" onClick={close}></div>
             <div className="filter-bar active">
                 <div className="title-wrapper">
                     <span className="filter-icon material-symbols-outlined">
                         <IoFilter />
                     </span>
                     <p className="title-medium">Filters</p>
-                    <button className="icon-btn close-btn has-state">
+                    <button className="icon-btn close-btn has-state" onClick={close}>
                         <IoClose />
                     </button>
                 </div>
                 <div className="filter-content">
                     <div className="search-wrapper">
                         <div className="input-oulined">
-                            <label for="search" className="body-large label">Search</label>
-                            <input type="search" name="search" id ="search" placeholder="Search recipes" className="input-field body-large"/>
+                            <label  htmlFor="search" className="body-large label" >Search</label>
+                            <input type="search" name="search" id ="search" placeholder="Search recipes" className="input-field body-large" onKeyDown={applyFilter}/>
                         </div>
                         
                     </div>
                     {/* cooking time */}
                     <div className="accordion-container">
-                        <button className="accordion-btn has-state" aria-expanded="false">
+                        <button className="accordion-btn has-state" aria-expanded={expanded["cook-time"]} onClick={() => toggleAccordion("cook-time")}>
                             <span className="accordion-icon">
                                 <IoTimer />
                             </span>
@@ -85,7 +135,7 @@ function FilterBar(){
 
                     {/* Ingredient */}
                     <div className="accordion-container">
-                        <button className="accordion-btn has-state" aria-expanded="false">
+                        <button className="accordion-btn has-state" aria-expanded={expanded["ingr"]} onClick={() => toggleAccordion("ingr")}>
                             <span className="accordion-icon">
                                 <PiCookingPotFill />
                             </span>
@@ -127,7 +177,7 @@ function FilterBar(){
 
                     {/* Calories */}
                     <div className="accordion-container">
-                        <button className="accordion-btn has-state" aria-expanded="false">
+                        <button className="accordion-btn has-state"aria-expanded={expanded["calories"]} onClick={() => toggleAccordion("calories")}>
                             <span className="accordion-icon">
                                 <MdEnergySavingsLeaf />
                             </span>
@@ -179,8 +229,21 @@ function FilterBar(){
                     {/* End calories */}
 
                     <div className="filter-actions">
-                        <button className="btn btn-secondary label-large has-state">CLEAR</button>
-                        <button className="btn btn-primary label-large">APPLY</button>
+                        <button
+                            className="btn btn-secondary label-large has-state"
+                            onClick={clearFilters}
+                        >
+                            CLEAR
+                        </button>
+                        <button
+                            className="btn btn-primary label-large"
+                            onClick={() => {
+                                applyFilter();
+                                close();
+                            }}
+                        >
+                            APPLY
+                        </button>
                     </div>
                 </div>
             </div>

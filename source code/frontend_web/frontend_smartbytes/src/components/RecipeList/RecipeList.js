@@ -1,13 +1,19 @@
 import "./RecipeList.scss";
 import { IoFilter } from "react-icons/io5";
+import {useState} from 'react';
+import FilterBar from "../FilterBar/FilterBar";
 function RecipeList(){
+    const[showFilterbar,setShowFilterbar] = useState(false);
+    function closeFilterbar(){
+        setShowFilterbar(false);
+    }
     return(
         <>
-            <div className="overlay" data-overlay data-filter-toggler></div>
+            {showFilterbar &&<FilterBar close={closeFilterbar}/>}
             <div className="recipe-container container">
                 <div className="title-wrapper">
                     <h2 className="headline-small">All Recipes</h2>
-                    <button className="btn btn-secondary btn-filter has-state has-icon" aria-label="Open filter bar" >
+                    <button className="btn btn-secondary btn-filter has-state has-icon " onClick={()=>setShowFilterbar(true)}aria-label="Open filter bar"  >
                         <span className="material-symbols-outlined" aria-hidden="true">
                             <IoFilter />
                         </span>
@@ -19,7 +25,11 @@ function RecipeList(){
                 </div>
 
                 <div className="grid-list" data-grid-list></div>
-                <div className="load-more grid-list" data-load-more></div>
+                <div className="load-more grid-list" data-load-more>
+                    <p className="info-text body-medium">Lorem ipsum dolor, sit asdgsdga
+                        lasdkgjlsad adfas,dsagdsa.                    
+                        </p>
+                </div>
             </div>
         </>
     )

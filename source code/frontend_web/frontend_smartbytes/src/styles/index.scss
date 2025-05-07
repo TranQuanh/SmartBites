@@ -369,6 +369,14 @@ background-color: var(--alpha-10);
     place-items: center;
     border-radius: var(--radius-circle);
 }
+.badge{
+    background-color: var(--error);
+    color: var(--white);
+    height: 16px;
+    min-width: 16px;
+    padding-inline: 4px;
+    border-radius: var(--radius-pill);
+}
 @media screen and (max-width:1280px) {
     .container {
         padding-inline: 18vw;
