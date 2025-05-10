@@ -6,7 +6,11 @@ import { MdExpandMore } from "react-icons/md";
 import { PiCookingPotFill } from "react-icons/pi";
 import { MdEnergySavingsLeaf } from "react-icons/md";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createFilter,clearFilter } from "../../actions/filter";
+
 function FilterBar({close}){
+    const dispatch = useDispatch();
     const [expanded, setExpanded] = useState({
         "cook-time": false,
         "ingr": false,
@@ -30,16 +34,29 @@ function FilterBar({close}){
       };
 
       const applyFilter = () => {
+        dispatch(clearFilter());
         const selected = [];
         const searchInput = document.querySelector('input[type="search"]');
         const searchValue = searchInput?.value.trim();
         if (searchValue) {
             selected.push(["q", searchValue]);
+            dispatch(createFilter(searchValue, "query_filter"));
         }
         const filterDivs = document.querySelectorAll('.accordion-overflow[data-filter]');
         filterDivs.forEach((div) => {
             const filter = getSelectedFilterFromDiv(div);
             if (filter) {
+                const [filterType, filterValue] = filter;
+                const filterTypeMap = {
+                "cook-time": "cook_filter",
+                ingr: "ingredients_filter",
+                calories: "calories_filter",
+                };
+                const reduxFilterType = filterTypeMap[filterType];
+                if (reduxFilterType) {
+                // Dispatch createFilter action
+                dispatch(createFilter(filterValue, reduxFilterType));
+                }
                 selected.push(filter);
             }
         }); 
@@ -53,6 +70,7 @@ function FilterBar({close}){
         if (searchInput) searchInput.value = "";
         const radioButtons = document.querySelectorAll('input[type="radio"]');
         radioButtons.forEach((radio) => (radio.checked = false));
+        dispatch(clearFilter());
     };
 
     return(
@@ -72,7 +90,12 @@ function FilterBar({close}){
                     <div className="search-wrapper">
                         <div className="input-oulined">
                             <label  htmlFor="search" className="body-large label" >Search</label>
-                            <input type="search" name="search" id ="search" placeholder="Search recipes" className="input-field body-large" onKeyDown={applyFilter}/>
+                            <input type="search" name="search" id ="search" placeholder="Search recipes" className="input-field body-large" onKeyDown={(e)=>{
+                                if (e.key === "Enter") {
+                                    applyFilter();
+                                    close();
+                                }
+                            }}/>
                         </div>
                         
                     </div>
