@@ -1,14 +1,14 @@
-export const createFilter = (filter,type) =>{
+export const createFilter = (value,type) =>{
     return {
         type: "CREATE_FILTER",
         filterType: type,
-        payload: filter
+        payload: value
     }
 }
-export const removeFilter = (filter,type) =>{
+export const removeFilter = (value,type) =>{
     return {
         type: "REMOVE_FILTER",
-        filterType: filter
+        filterType: value,
     }
 }
 export const clearFilter = () =>{

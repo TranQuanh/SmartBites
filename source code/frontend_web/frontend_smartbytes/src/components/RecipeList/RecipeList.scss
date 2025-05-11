@@ -1,22 +1,26 @@
 @import "../../styles/index.scss";
-.recipe-container{
+
+.recipe-container {
     padding-bottom: 36px;
     padding-top: 36px;
-    .title-wrapper{
+
+    .title-wrapper {
         height: 40px;
-        display:flex;
+        display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 16px;
 
-        .btn-filter{
+        .btn-filter {
             padding-inline: 12px;
-            .wrapper{
+
+            .wrapper {
                 display: flex;
                 align-items: center;
                 gap: 8px;
             }
         }
+
         .btn-filter.active {
             position: fixed;
             bottom: calc(var(--mobile-nav-height) + 16px);
@@ -29,28 +33,122 @@
             gap: 12px;
             transition: none;
             animation: btn-filter-active 200ms var(--transition-timing-function) forwards;
-          }
+        }
+
         @keyframes btn-filter-active {
             0% {
-              transform: scale(0.5);
-              opacity: 0;
+                transform: scale(0.5);
+                opacity: 0;
             }
             100% {
-              transform: scale(1);
-              opacity: 1;
+                transform: scale(1);
+                opacity: 1;
             }
-          }
+        }
     }
-    .grid-list{
-        position: relative;
+
+    .grid-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;
+        justify-content: space-between;
+        align-items: stretch; // Đảm bảo các card trong cùng hàng có chiều cao bằng nhau
+
+        .col {
+            width: calc(20% - 16px);
+            box-sizing: border-box;
+            margin-bottom: 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            height: 100%; // Đảm bảo card chiếm toàn bộ chiều cao của .col
+
+            .card-img-top {
+                width: 100%;
+                border-radius: var(--radius-8);
+                height: 200px;
+                object-fit: cover;
+                object-position: center;
+            }
+
+            .card-body {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding-inline: 0px;
+                padding-top: 0.8em;
+
+                .card-title {
+                    font-size: var(--fs-body-large);
+                    font-weight: var(--weight-medium);
+                    margin-bottom: 1em;
+                    line-height: 1.2;
+                }
+
+                .card-text-wrapper {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding-top: 8px;
+                    min-height: 48px; // Đặt chiều cao tối thiểu để đồng đều (có thể điều chỉnh dựa trên nội dung)
+                    margin-top: auto; // Đẩy xuống dưới cùng
+
+                    .card-cook-time {
+                        display: flex;
+                        align-items: center;
+
+                        .cook-time-icon {
+                            font-size: 16px;
+                            padding-right: 8px;
+                        }
+
+                        .card-text {
+                            font-size: var(--fs-body-medium);
+                            color: var(--on-background-variant);
+                        }
+                    }
+
+                    .save-card {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 32px;
+                        height: 32px;
+                        border-radius: var(--radius-8);
+                        background-color: var(--outline);
+                        color: var(--on-background);
+                        font-size: 16px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+
+                        &:hover {
+                            background-color: var(--input-outline-hover);
+                        }
+
+                        &.selected {
+                            background-color: var(--primary);
+                            color: var(--on-primary);
+                        }
+                    }
+                }
+            }
+        }
     }
-    .load-more{
+
+    .load-more {
         position: relative;
         margin-top: 8px;
         align-items: center;
-        .info-text{
+
+        .info-text {
             position: absolute;
-            top:0;
+            top: 0;
             left: 50%;
             transform: translateX(-50%);
             font-weight: var(--weigth-medium);

@@ -5,7 +5,7 @@ const init = {
     calories_filter: ""
 };
 const filterReducer = (state = init, action) => {
-    console.log(state);
+    // console.log(state);
     switch (action.type) {
         case "CREATE_FILTER":
             return {
@@ -19,7 +19,7 @@ const filterReducer = (state = init, action) => {
             };
         case "CLEAR_FILTER":
             return {
-                ...state,
+                query_filter: "",
                 cook_filter: "",
                 ingredients_filter: "",
                 calories_filter: ""
