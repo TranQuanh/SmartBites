@@ -19,6 +19,7 @@ function RecipeList() {
     const [filterQuery, setFilterQuery] = useState("");
     const filterBtnRef = useRef(null);
     const observerRef = useRef(null);
+    const [isFetching, setIsFetching] = useState(false); // prevent double fetch
 
     function closeFilterbar() {
         setShowFilterbar(false);
@@ -45,25 +46,20 @@ function RecipeList() {
 
     // Reset recipes and page when filter changes
     useEffect(() => {
-        // Khi filterQuery thay đổi, reset recipes và page về 1, sau đó fetch trang đầu tiên
         setRecipes([]);
         setPage(1);
         setHasMore(true);
         setError(null);
     }, [filterQuery]);
 
-    useEffect(() => {
-        // Chỉ fetch khi page là 1 hoặc khi scroll tới cuối (page tăng)
-        fetchRecipes();
-    }, [page, filterQuery]);
-
-    const fetchRecipes = useCallback(async () => {
-        if (loading || !hasMore) return;
+    const fetchRecipes = useCallback(async (fetchPage = page) => {
+        if (loading || isFetching || !hasMore) return;
         setLoading(true);
+        setIsFetching(true);
         try {
             const queryParams = new URLSearchParams({
-                page,
-                limit: 40,
+                page: fetchPage,
+                limit: 20,
             });
             if (filterQuery) {
                 filterQuery.split('&').forEach(pair => {
@@ -76,35 +72,37 @@ function RecipeList() {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            setRecipes(prev => page === 1 ? data.recipes : [...prev, ...data.recipes]);
+            setRecipes(prev => fetchPage === 1 ? data.recipes : [...prev, ...data.recipes]);
             setHasMore(data.hasMore);
         } catch (error) {
             console.error("Error fetching recipes:", error);
             setError(error.message || "Unable to load recipes");
         } finally {
             setLoading(false);
+            setIsFetching(false);
         }
-    }, [page, hasMore, filterQuery, loading]);
+    }, [page, hasMore, filterQuery, loading, isFetching]);
 
     useEffect(() => {
-        fetchRecipes();
-    }, [fetchRecipes]);
+        fetchRecipes(page);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page, filterQuery]);
 
     const lastRecipeElementRef = useCallback(
         (node) => {
-            if (loading || !hasMore) return;
+            if (loading || !hasMore || isFetching) return;
             if (observerRef.current) observerRef.current.disconnect();
-            observerRef.current = new IntersectionObserver(
+            observerRef.current = new window.IntersectionObserver(
                 (entries) => {
-                    if (entries[0].isIntersecting) {
-                        setPage((prev) => prev + 1); // Trigger loading the next page
+                    if (entries[0].isIntersecting && hasMore && !loading && !isFetching) {
+                        setPage((prev) => prev + 1);
                     }
                 },
                 { threshold: 1.0 }
             );
             if (node) observerRef.current.observe(node);
         },
-        [loading, hasMore]
+        [loading, hasMore, isFetching]
     );
 
     return (
