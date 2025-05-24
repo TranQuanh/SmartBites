@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Home from "./pages/Home/Home";
 import Recipes from "./pages/Recipe/Recipes";
-import Settings from "./pages/Setting/Settings";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LayoutDefault from "./pages/layout/LayoutDefault/LayoutDefault";
+import RecipeDetail from "./pages/RecipeDetail/RecipeDetail";
 import "./styles/index.scss"; // Import file CSS chứa định nghĩa theme
 import Error404 from "./pages/Error404/Error404";
 function App() {
@@ -30,7 +30,7 @@ function App() {
           <Route element={<LayoutDefault toggleTheme={toggleTheme} theme={theme} />}>
             <Route path="/" element={<Home />} />
             <Route path="/recipes" element={<Recipes />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path ="/recipes/:id" element={<RecipeDetail/>}/>
             <Route path="*" element={<Error404 />} />
           </Route>
         </Routes>

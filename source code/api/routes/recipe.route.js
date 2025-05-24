@@ -8,7 +8,44 @@ router.get("/", async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    const recipes = await Recipe.find()
+    // Build filter object
+    const filter = {};
+    if (req.query.q) {
+      filter.recipe_name = { $regex: req.query.q, $options: "i" };
+    }
+    if (req.query.cook) {
+      // handle cook time ranges
+      if (req.query.cook.includes('-')) {
+        const [min, max] = req.query.cook.split('-').map(Number);
+        filter["filter.cook"] = { $gte: min, $lte: max };
+      } else if (req.query.cook.endsWith('+')) {
+        filter["filter.cook"] = { $gte: parseInt(req.query.cook) };
+      } else {
+        filter["filter.cook"] = parseInt(req.query.cook);
+      }
+    }
+    if (req.query.ingredients) {
+      if (req.query.ingredients.includes('-')) {
+        const [min, max] = req.query.ingredients.split('-').map(Number);
+        filter["filter.ingredients"] = { $gte: min, $lte: max };
+      } else if (req.query.ingredients.endsWith('+')) {
+        filter["filter.ingredients"] = { $gte: parseInt(req.query.ingredients) };
+      } else {
+        filter["filter.ingredients"] = parseInt(req.query.ingredients);
+      }
+    }
+    if (req.query.calories) {
+      if (req.query.calories.includes('-')) {
+        const [min, max] = req.query.calories.split('-').map(Number);
+        filter["filter.calories"] = { $gte: min, $lte: max };
+      } else if (req.query.calories.endsWith('+')) {
+        filter["filter.calories"] = { $gte: parseInt(req.query.calories) };
+      } else {
+        filter["filter.calories"] = parseInt(req.query.calories);
+      }
+    }
+
+    const recipes = await Recipe.find(filter)
       .select("recipe_id recipe_name image_url filter.cook")
       .limit(limit)
       .skip(skip)
@@ -21,10 +58,9 @@ router.get("/", async (req, res) => {
       cook: recipe.filter.cook,
     }));
 
-    const totalRecipes = await Recipe.countDocuments();
+    const totalRecipes = await Recipe.countDocuments(filter);
     const hasMore = skip + recipes.length < totalRecipes;
 
-    console.log(`Page: ${page}, Limit: ${limit}, Skip: ${skip}, Total: ${totalRecipes}, Found: ${recipes.length}, HasMore: ${hasMore}`);
     res.status(200).json({
       recipes: formattedRecipes,
       hasMore,

@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createFilter, clearFilter } from "../../actions/filter";
 
-function FilterBar({ close }) {
+function FilterBar({ close, onApply }) {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.filter); // Access filter state from Redux
   const [expanded, setExpanded] = useState({
@@ -49,18 +49,29 @@ function FilterBar({ close }) {
       if (filter) {
         const [filterType, filterValue] = filter;
         const filterTypeMap = {
+          "cook-time": "cook",
+          ingr: "ingredients",
+          calories: "calories",
+        };
+        const queryKey = filterTypeMap[filterType];
+        if (queryKey) {
+          selected.push([queryKey, filterValue]);
+        }
+        const filterTypeMapRedux = {
           "cook-time": "cook_filter",
           ingr: "ingredients_filter",
           calories: "calories_filter",
         };
-        const reduxFilterType = filterTypeMap[filterType];
+        const reduxFilterType = filterTypeMapRedux[filterType];
         if (reduxFilterType) {
           dispatch(createFilter(filterValue, reduxFilterType));
         }
-        selected.push(filter);
       }
     });
-    console.log(selected);
+    // Build query string for backend
+    const queryString = selected.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+    if (onApply) onApply(queryString);
+    close();
   };
 
   const clearFilters = () => {
@@ -244,10 +255,7 @@ function FilterBar({ close }) {
             </button>
             <button
               className="btn btn-primary label-large"
-              onClick={() => {
-                applyFilter();
-                close();
-              }}
+              onClick={applyFilter}
             >
               APPLY
             </button>

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import SkeletonCard from "../skeletonCard/skeletonCard";
 import { FaClock } from "react-icons/fa6";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
+import { Link } from "react-router-dom";
 function RecipeList() {
     const filter = useSelector((state) => state.filterReducer);
     const [filternumber, setFilterNumber] = useState(0);
@@ -15,6 +16,7 @@ function RecipeList() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [hasMore, setHasMore] = useState(true);
+    const [filterQuery, setFilterQuery] = useState("");
     const filterBtnRef = useRef(null);
     const observerRef = useRef(null);
 
@@ -41,6 +43,20 @@ function RecipeList() {
         };
     }, []);
 
+    // Reset recipes and page when filter changes
+    useEffect(() => {
+        // Khi filterQuery thay đổi, reset recipes và page về 1, sau đó fetch trang đầu tiên
+        setRecipes([]);
+        setPage(1);
+        setHasMore(true);
+        setError(null);
+    }, [filterQuery]);
+
+    useEffect(() => {
+        // Chỉ fetch khi page là 1 hoặc khi scroll tới cuối (page tăng)
+        fetchRecipes();
+    }, [page, filterQuery]);
+
     const fetchRecipes = useCallback(async () => {
         if (loading || !hasMore) return;
         setLoading(true);
@@ -49,12 +65,18 @@ function RecipeList() {
                 page,
                 limit: 40,
             });
+            if (filterQuery) {
+                filterQuery.split('&').forEach(pair => {
+                    const [k, v] = pair.split('=');
+                    if (k && v) queryParams.set(k, decodeURIComponent(v));
+                });
+            }
             const response = await fetch(`http://localhost:3000/api/recipes?${queryParams}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            setRecipes((prev) => [...prev, ...data.recipes]);
+            setRecipes(prev => page === 1 ? data.recipes : [...prev, ...data.recipes]);
             setHasMore(data.hasMore);
         } catch (error) {
             console.error("Error fetching recipes:", error);
@@ -62,7 +84,7 @@ function RecipeList() {
         } finally {
             setLoading(false);
         }
-    }, [page, hasMore]);
+    }, [page, hasMore, filterQuery, loading]);
 
     useEffect(() => {
         fetchRecipes();
@@ -87,7 +109,7 @@ function RecipeList() {
 
     return (
         <>
-            {showFilterbar && <FilterBar close={closeFilterbar} />}
+            {showFilterbar && <FilterBar close={closeFilterbar} onApply={setFilterQuery} />}
             <div className="recipe-container container">
                 <div className="title-wrapper">
                     <h2 className="headline-small">All Recipes</h2>
@@ -107,42 +129,51 @@ function RecipeList() {
                         </span>
                     </button>
                 </div>
-
                 <div className="grid-list" data-grid-list>
-                    {recipes.map((recipe, index) => {
-                        const isLastRecipe = index === recipes.length - 1;
-                        return (
-                            <div
-                                className="col"
-                                key={recipe.id}
-                                ref={isLastRecipe ? lastRecipeElementRef : null}
-                            >
-                                <div className="card">
-                                    <img
-                                        src={recipe.image}
-                                        alt={recipe.recipe_name}
-                                        className="card-img-top"
-                                    />
-                                    <div className="card-body">
-                                        <h5 className="card-title">{recipe.recipe_name}</h5>
-                                        <div className="card-text-wrapper">
-                                            <div className="card-cook-time">
-                                                <div className="cook-time-icon">
-                                                    <FaClock />
-                                                </div>
-                                                <p className="card-text">
-                                            {recipe.cook} minutes 
-                                            </p>
+                    {recipes.length === 0 && !loading && !error ? (
+                        <div className="no-recipe-quote">
+                            <p>No recipes found. Try another search or filter!</p>
+                        </div>
+                    ) : (
+                        recipes.map((recipe, index) => {
+                            const isLastRecipe = index === recipes.length - 1;
+                            return (
+                                <div
+                                    className="col"
+                                    key={recipe.id}
+                                    ref={isLastRecipe ? lastRecipeElementRef : null}
+                                >
+                                    <div className="card">
+                                        <Link to={`/recipes/${recipe.id}`} className="card-link">
+                                            <img
+                                                src={recipe.image}
+                                                alt={recipe.recipe_name}
+                                                className="card-img-top"
+                                            />
+                                            <div className="card-body">
+                                                <h5 className="card-title">{recipe.recipe_name}</h5>
                                             </div>
-                                            <div className="save-card">
-                                                <MdOutlineBookmarkAdd />
+                                        </Link>
+                                        <div className="card-body">
+                                            <div className="card-text-wrapper">
+                                                <div className="card-cook-time">
+                                                    <div className="cook-time-icon">
+                                                        <FaClock />
+                                                    </div>
+                                                    <p className="card-text">
+                                                        {recipe.cook} minutes 
+                                                    </p>
+                                                </div>
+                                                <div className="save-card">
+                                                    <MdOutlineBookmarkAdd />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })
+                    )}
                     {loading &&
                         Array.from({ length: 20 }).map((_, index) => (
                             <SkeletonCard key={`skeleton-${index}`} />

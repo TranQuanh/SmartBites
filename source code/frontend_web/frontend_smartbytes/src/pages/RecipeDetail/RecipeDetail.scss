@@ -1,0 +1,214 @@
+@import "../../styles/index.scss";
+@import "../../styles/partials/animations.scss";
+
+.detail-page-main {
+    padding-top: 80px;
+}
+
+.detail-content {
+    margin-top: 0;
+    .title-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 24px;
+        .display-small {
+            font-size: 2.4rem;
+            font-weight: bold;
+        }
+    }
+    .detail-stats-row {
+        display: flex;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+        margin-bottom: 32px;
+        background: var(--primary-container);
+        border-radius: var(--radius-8);
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        overflow: hidden;
+        .stats-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;
+            flex: 1 1 0;
+            padding: 12px 0;
+            position: relative;
+            background: transparent;
+            .display-medium {
+                font-size: 2.2rem;
+                font-weight: bold;
+                color: var(--primary);
+                margin-bottom: 2px;
+                line-height: 1.1;
+            }
+            .label-medium {
+                font-size: 1.1rem;
+                color: var(--on-background-variant);
+                line-height: 1.1;
+            }
+        }
+        // Đường kẻ dọc giữa các stats-item
+        .stats-item:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 25%;
+            right: 0;
+            width: 1px;
+            height: 50%;
+            background: var(--outline);
+        }
+    }
+    .ingredients-section {
+        margin-bottom: 32px;
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .ingredients-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            .ingredient-box {
+                background: var(--primary-container);
+                color: var(--on-background);
+                border-radius: var(--radius-8);
+                padding: 8px 16px;
+                font-size: 1.1rem;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            }
+        }
+    }
+    .nutrition-section {
+        margin-bottom: 32px;
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .nutrition-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            .nutrition-box {
+                background: var(--light-background);
+                border: 1px solid var(--outline);
+                border-radius: var(--radius-8);
+                padding: 8px 16px;
+                font-size: 1.1rem;
+                min-width: 120px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                .nutrition-name {
+                    font-weight: 500;
+                    color: var(--on-background-variant);
+                }
+                .nutrition-value {
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    color: var(--primary);
+                }
+                .nutrition-percent {
+                    font-size: 0.95rem;
+                    color: var(--on-background-variant);
+                }
+            }
+        }
+    }
+    .direction-section {
+        margin-bottom: 36px;
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: var(--primary);
+        }
+        .direction-list {
+            padding-left: 0;
+            margin: 0;
+            list-style: none;
+            counter-reset: step;
+            background: var(--primary-container);
+            border-radius: var(--radius-8);
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.04);
+            border: 1.5px dashed var(--outline);
+            padding: 24px 18px 24px 32px;
+            position: relative;
+            min-width: 220px;
+            .direction-step {
+                position: relative;
+                margin-bottom: 0;
+                font-size: 1.13rem;
+                line-height: 2.2;
+                padding: 0 0 0 38px;
+                background: transparent;
+                border-radius: 0;
+                font-weight: 500;
+                min-height: 38px;
+                box-shadow: none;
+                border: none;
+                transition: none;
+                display: block;
+                // Đảm bảo số luôn căn với dòng đầu tiên kể cả khi xuống dòng
+                text-indent: 0;
+                &:before {
+                    counter-increment: step;
+                    content: counter(step) ".";
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 32px;
+                    height: 1em;
+                    color: var(--primary);
+                    font-weight: bold;
+                    font-size: 1.08rem;
+                    font-family: 'Merriweather', serif;
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: flex-end;
+                    padding-right: 8px;
+                    background: transparent;
+                    box-shadow: none;
+                    line-height: 1;
+                }
+                &:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 3px;
+                    height: 1.5px;
+                    background: var(--outline);
+                }
+            }
+            .direction-step:last-child:after {
+                display: none;
+            }
+        }
+    }
+}
+
+.detail-banner.img-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 24px;
+    width: 100%;
+    .img-cover {
+        width: 100%;
+        max-width: 100%;
+        height: 320px;
+        object-fit: cover;
+        border-radius: var(--radius-8);
+        box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
+        border: 4px solid var(--background);
+        background: var(--light-background);
+        display: block;
+    }
+}
