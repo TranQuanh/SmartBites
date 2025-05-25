@@ -1,0 +1,26 @@
+.section.quote{
+    display: block;
+    .quote-text{
+        font-size: var(--fs-body-large);
+        line-height: 1.3em;
+        color: var(--on-background);
+        .quote-left{
+            display: inline;
+            color: var(--on-background);
+            font-size: 1.5em;
+            margin-right: 0.5em;
+        }
+        .quote-right{
+            display: inline;
+            color: var(--on-background-variant);
+            font-size: 1.5em;
+            margin-left: 0.5em;
+        }
+
+    }
+    .quote-author{
+        color: var(--on-background-variant);
+        text-align: right;
+        margin-top: 1em;
+    }
+}

@@ -1,0 +1,11 @@
+WeeklyReport/doc_weekly-report/
+
+source code/model/data/
+source code/model/recipe_final.csv
+source code/model/output.csv
+source code/new_venv
+source code/model/raw-data-images/
+Project Outline/Outline.docx
+source code/model/knn_model.joblib
+source code/model/scaler.joblib
+source code/model/vectorizer.joblib

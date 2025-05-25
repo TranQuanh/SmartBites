@@ -1,0 +1,60 @@
+@import "../../styles/index.scss";
+@import "../../styles/partials/animations.scss";
+.sidebar__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    // background: rgba(0, 0, 0, 0.5); /* Màu nền mờ để che màn hình */
+    z-index: 98; /* Đặt dưới sidebar nhưng trên các phần tử khác */
+}
+
+.sidebar{
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: var(--primary-container);
+    box-shadow: 0 0 0 1000px rgba(0,0,0,0.2),
+                3px 0 5px var(--shadow-color);
+    transform: translate(-100%);
+
+    animation: getAnimationDuration(0.3s) SlideInLeft forwards;
+    &__link{
+        display: block;
+        padding: 1em;
+        border-left: 0.3em solid transparent;
+        margin-bottom: 1em;
+        color: var(--on-background-variant);
+        font-weight: bold;
+        font-size: 1.1em;
+        transform: translate(-100%);
+        animation: getAnimationDuration(0.3s) SlideInLeft forwards;
+        @for $i from 1 through 3{
+            &:nth-child(#{$i}){
+                animation-delay: #{$i*0.1}s;
+            }
+        }
+        &.active{
+            border-left-color: var(--primary);
+        }
+        &:hover{
+            border-left-color: var(--primary-hover);
+            background-color: var(--alpha-10);
+            background: rgba(0,0,0,0.05);
+            transition: all 0.3s ease-in-out;
+        }
+        .sidebar__icon{
+            margin-right: 0.5em;
+            font-size: 1.2em;
+        }
+    }
+}
+@media screen and (min-width: 769px) {
+    .sidebar {
+      display: none; /* Ẩn sidebar khi màn hình lớn hơn 768px */
+    }
+  }

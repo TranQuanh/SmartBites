@@ -1,0 +1,81 @@
+@import "../../styles/index.scss";
+@import "../../styles/partials/animations.scss";
+.section{
+    .title{
+        font-size: var(--fs-title-large);
+        margin-bottom: .5em;
+        font-weight: 900;
+    }
+    .info{
+        color: var(--on-background-variant);
+        font-size: var(--fs-body-large);
+        letter-spacing: 1px;
+        line-height: 1.3em;
+        margin-bottom: 1.2em;
+    }
+    .col{
+        width: 50%;
+    }
+}
+
+// Hero Section
+.section.hero{
+    .typography{
+        padding-right: 1em;
+    }
+    .gallery{
+        display:grid;
+        grid-template-columns: repeat(3,1fr);
+        gap:  1.75vw;
+        
+    }
+    .btn{
+        transition: (background-color) 0.3s ease;
+        color: var(--badge-btn);
+        &:hover{
+            background-color: var(--primary-hover);
+        }
+    }
+}
+
+// End Hero Section
+
+// Improskills
+.section.improveskills{
+    .col.img{
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+    }
+    .col.typography{
+        padding-left: 1em;
+        .skill-item{
+            font-size: var(--fs-body-large);
+            border-left: .2em solid var(--primary);
+            margin-bottom: .5em;
+            padding: .1em 0 .1em .5em;
+            color: var(--on-background-variant);
+            font-weight: bold;
+            transform: translateX(100%);
+            opacity: 0;
+            animation: getAnimationDuration(.3s) SlideInRight forwards;
+            @for $i from 2 through 7{
+                &:nth-child(#{$i}){
+                    animation-delay: #{$i*0.1}s;
+                }
+            }
+        }
+        .btn{
+            margin-top: .75em;
+            transition: background-color 0.3s ease;
+            color: var(--badge-btn);
+            &:hover{
+                background-color: var(--primary-hover);
+            }
+        }
+    }
+}
+// End Improskills
