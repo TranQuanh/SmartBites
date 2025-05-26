@@ -1,0 +1,76 @@
+@import "../../styles/index.scss";
+
+.card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .card-img-top {
+        width: 100%;
+        border-radius: var(--radius-8);
+        height: 200px;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .card-body {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-inline: 0px;
+
+        .card-title {
+            padding-top: 0.8em;
+            font-size: var(--fs-body-large);
+            font-weight: var(--weight-medium);
+            margin-bottom: 1em;
+            line-height: 1.2;
+            transition: color 0.2s;
+        }
+
+        .card-text-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-top: 8px;
+            min-height: 48px;
+            margin-top: auto;
+
+            .save-card {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 32px;
+                height: 32px;
+                border-radius: var(--radius-8);
+                background-color: var(--outline);
+                color: var(--on-background);
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: var(--input-outline-hover);
+                }
+
+                &.selected {
+                    background-color: var(--primary);
+                    color: var(--on-primary);
+                }
+            }
+        }
+    }
+
+    &:hover {
+        .card-title {
+            color: var(--primary);
+        }
+        .card-img-top {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+    }
+}

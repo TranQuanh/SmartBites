@@ -9,3 +9,4 @@ Project Outline/Outline.docx
 source code/model/knn_model.joblib
 source code/model/scaler.joblib
 source code/model/vectorizer.joblib
+*.joblib
