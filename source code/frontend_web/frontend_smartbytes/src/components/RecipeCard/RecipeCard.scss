@@ -33,11 +33,26 @@
 
         .card-text-wrapper {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
             padding-top: 8px;
             min-height: 48px;
             margin-top: auto;
+
+            .card-cook-time {
+                display: flex;
+                align-items: center;
+
+                .cook-time-icon {
+                    font-size: 16px;
+                    padding-right: 8px;
+                }
+
+                .card-text {
+                    font-size: var(--fs-body-medium);
+                    color: var(--on-background-variant);
+                }
+            }
 
             .save-card {
                 display: flex;
@@ -50,7 +65,7 @@
                 color: var(--on-background);
                 font-size: 16px;
                 cursor: pointer;
-                transition: background-color 0.3s ease;
+                transition: background-color 0.3s, color 0.3s, filter 0.3s;
 
                 &:hover {
                     background-color: var(--input-outline-hover);
@@ -59,6 +74,12 @@
                 &.selected {
                     background-color: var(--primary);
                     color: var(--on-primary);
+
+                    &:hover {
+                        filter: brightness(0.85);
+                        background-color: var(--primary);
+                        color: var(--on-primary);
+                    }
                 }
             }
         }

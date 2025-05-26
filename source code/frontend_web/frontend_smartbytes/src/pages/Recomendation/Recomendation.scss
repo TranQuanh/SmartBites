@@ -1,0 +1,141 @@
+@import "../../styles/index.scss";
+@import "../../styles/partials/animations.scss";
+
+.recomendation-page {
+  max-width: 100%;
+  padding: 32px 0;
+}
+
+.recomendation-form {
+  background: var(--primary-container);
+  border-radius: var(--radius-8);
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.06);
+  padding: 32px 24px 24px 24px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-row {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 180px;
+  min-width: 160px;
+  label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--primary);
+  }
+  input {
+    padding: 8px 12px;
+    border-radius: var(--radius-4);
+    border: 1.5px solid var(--outline);
+    font-size: 1.1rem;
+    background: var(--background);
+    color: var(--on-background);
+    transition: border-color 0.2s;
+    &:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+  }
+}
+
+/* Recipe card grid giống RecipeList */
+.grid-list[data-grid-list] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  width: 100%;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin-top: 32px;
+
+  > .col {
+    flex: 0 0 calc(20% - (18px * 4 / 5));
+    max-width: calc(20% - (18px * 4 / 5));
+    box-sizing: border-box;
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 1200px) {
+  .grid-list[data-grid-list] > .col {
+    flex: 0 0 calc(25% - (18px * 3 / 4));
+    max-width: calc(25% - (18px * 3 / 4));
+  }
+}
+@media (max-width: 900px) {
+  .grid-list[data-grid-list] > .col {
+    flex: 0 0 calc(33.333% - 12px);
+    max-width: calc(33.333% - 12px);
+  }
+}
+@media (max-width: 700px) {
+  .grid-list[data-grid-list] > .col {
+    flex: 0 0 calc(50% - 9px);
+    max-width: calc(50% - 9px);
+  }
+}
+@media (max-width: 480px) {
+  .grid-list[data-grid-list] > .col {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .form-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .recomendation-form {
+    padding: 18px 8px;
+  }
+}
+
+.recomendation-banner {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-align: center;
+  margin: 32px 0 12px 0;
+  letter-spacing: 0.5px;
+  border-radius: var(--radius-8);
+  padding: 0;
+  box-shadow: none;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  background: none; // bỏ background
+}
+
+.recomendation-desc {
+  font-size: 1.13rem;
+  color: var(--on-background-variant);
+  margin-bottom: 18px;
+  text-align: left;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  max-width: 700px;
+  margin-left: 0;
+  margin-right: 0;
+  box-shadow: none;
+}

@@ -146,35 +146,12 @@
                 transform: scaleX(0);
             }
             &:nth-child(3){
-                transform: translate(0,-50%)  rotate(-45deg)
+                transform: translate(0,-50%)  rotate(-45deg) ;
             }
         }
     }    
     }
-    &.navbar-fixed {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        z-index: 100;
-        background: var(--background);
-        box-shadow: 0 3px 12px var(--shadow-color);
-        will-change: transform, opacity;
-    }
-    &.navbar-animate {
-        animation: navbar-slide-down 0.45s cubic-bezier(0.4, 0.0, 0.2, 1);
-    }
-}
 
-@keyframes navbar-slide-down {
-    from {
-        transform: translateY(-100%);
-        opacity: 0.5;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
 }
 
 @media screen and (max-width: 768px) {

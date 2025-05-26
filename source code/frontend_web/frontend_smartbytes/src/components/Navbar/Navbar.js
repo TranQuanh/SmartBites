@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import { NavLink, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faList, faCog, faSun, faMoon, faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faList, faCog, faSun, faMoon, faBookmark,faStar } from '@fortawesome/free-solid-svg-icons';
 function Navbar({ toggleTheme, theme }) {
     const [showSidebar, setShowSidebar] = useState(false);
     const links = [
@@ -18,10 +18,15 @@ function Navbar({ toggleTheme, theme }) {
             icon: faList
         },
         {
+            name: "Recomendation",
+            path: "/recomendation",
+            icon: faStar
+        },
+        {
             name: "Save Recipes",
             path: "/save-recipes",
             icon: faBookmark
-        }
+        },
         // {
         //     name: "Settings",
         //     path:"/settings",
@@ -56,10 +61,10 @@ function Navbar({ toggleTheme, theme }) {
                     {links.slice(0, -1).map(link => (
                         <NavLink className="navi-trans" to={link.path} key={link.name}>{link.name}</NavLink>
                     ))}
-                    <a className="btn btn-primary">
+                    <Link className="btn btn-primary" to ="/save-recipes">
                         <FontAwesomeIcon icon={faBookmark} className="sidebar__icon" />
                         <span className="span">Saved Reciped</span>
-                    </a>
+                    </Link>
                     <div className={showSidebar ? "navbar__button active" : "navbar__button"} onClick={() => setShowSidebar(true)}>
                         <div className="bar"> </div>
                         <div className="bar"> </div>
