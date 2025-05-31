@@ -10,3 +10,5 @@ source code/model/knn_model.joblib
 source code/model/scaler.joblib
 source code/model/vectorizer.joblib
 *.joblib
+
+Final Report/Nhập môn TTCS.docx
