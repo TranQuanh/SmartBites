@@ -17,6 +17,51 @@
             font-size: 2.4rem;
             font-weight: bold;
         }
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: var(--radius-8);
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            background: var(--secondary-container); /* Màu mặc định khi chưa lưu */
+            color: var(--on-secondary-container);
+            &.btn-secondary.has-state.has-icon {
+                /* Giữ style mặc định */
+                &.removed {
+                    background: var(--secondary-container); /* Màu khi chưa lưu */
+                    color: var(--on-secondary-container);
+                    .save-text {
+                        display: inline;
+                    }
+                    .unsaveed-text {
+                        display: none;
+                    }
+                }
+                &:not(.removed) {
+                    background: var(--primary); /* Màu primary khi đã lưu */
+                    color: var(--on-primary);
+                    .save-text {
+                        display: inline;
+                    }
+                    .unsaveed-text {
+                        display: none;
+                    }
+                }
+            }
+            .bookmark-add {
+                font-size: 1.5rem;
+            }
+            .save-text {
+                font-size: 1.1rem;
+                font-weight: 500;
+            }
+            .unsaveed-text {
+                font-size: 1.1rem;
+                font-weight: 500;
+            }
+        }
     }
     .detail-stats-row {
         display: flex;
@@ -51,7 +96,6 @@
                 line-height: 1.1;
             }
         }
-        // Đường kẻ dọc giữa các stats-item
         .stats-item:not(:last-child)::after {
             content: "";
             position: absolute;
@@ -154,7 +198,6 @@
                 border: none;
                 transition: none;
                 display: block;
-                // Đảm bảo số luôn căn với dòng đầu tiên kể cả khi xuống dòng
                 text-indent: 0;
                 &:before {
                     counter-increment: step;

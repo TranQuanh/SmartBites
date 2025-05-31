@@ -8,8 +8,14 @@ function RecipeDetail() {
     const [recipe, setRecipe] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [saved, setSaved] = useState(false);
 
     useEffect(() => {
+        // Kiểm tra xem công thức có được lưu trong localStorage chưa
+        const savedList = JSON.parse(localStorage.getItem("savedRecipes") || "[]");
+        setSaved(savedList.includes(Number(id)));
+
+        // Lấy chi tiết công thức
         async function fetchRecipe() {
             setLoading(true);
             setError(null);
@@ -27,6 +33,21 @@ function RecipeDetail() {
         fetchRecipe();
     }, [id]);
 
+    const handleSave = () => {
+        let savedList = JSON.parse(localStorage.getItem("savedRecipes") || "[]");
+        if (saved) {
+            // Xóa ID khỏi danh sách nếu đã lưu
+            savedList = savedList.filter(savedId => savedId !== Number(id));
+        } else {
+            // Thêm ID vào danh sách nếu chưa lưu
+            savedList.push(Number(id));
+        }
+        localStorage.setItem("savedRecipes", JSON.stringify(savedList));
+        setSaved(!saved);
+        // Gửi sự kiện để đồng bộ với các thành phần khác
+        window.dispatchEvent(new Event("savedRecipesChanged"));
+    };
+
     if (loading) return <div className="detail-page-main"><p>Loading...</p></div>;
     if (error) return <div className="detail-page-main"><p>{error}</p></div>;
     if (!recipe) return null;
@@ -39,7 +60,7 @@ function RecipeDetail() {
         { label: "Calories", value: recipe.filter?.calories }
     ];
 
-    // Lấy dinh dưỡng (chỉ lấy các trường phổ biến, có thể tuỳ chỉnh)
+    // Lấy thông tin dinh dưỡng
     const nutritionKeys = [
         "calories", "fat", "saturatedFat", "cholesterol", "sodium", "carbohydrates", "fiber", "sugars", "protein"
     ];
@@ -54,10 +75,15 @@ function RecipeDetail() {
                 <div className="detail-content">
                     <div className="title-wrapper">
                         <h1 className="display-small">{recipe.recipe_name}</h1>
-                        <button className="btn btn-secondary has-state has-icon removed">
-                            <span className="material-symbols-outlined bookmark-add" aria-hidden="true"><MdOutlineBookmarkAdd /></span>
-                            <span className="label-large save-text">Save</span>
-                            <span className="label-large unsaveed-text">Unsave</span>
+                        <button 
+                            className={`btn btn-secondary has-state has-icon ${saved ? '' : 'removed'}`}
+                            onClick={handleSave}
+                            title={saved ? "Unsave" : "Save"}
+                        >
+                            <span className="material-symbols-outlined bookmark-add">
+                                <MdOutlineBookmarkAdd />
+                            </span>
+                            <span className="label-large save-text">{saved ? 'Unsave' : 'Save'}</span>
                         </button>
                     </div>
 
@@ -112,4 +138,5 @@ function RecipeDetail() {
         </div>
     );
 }
+
 export default RecipeDetail;

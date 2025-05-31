@@ -51,60 +51,133 @@ function Recomendation() {
 
   return (
     <div className="recomendation-page container">
-      <h2 className="headline-small" style={{marginBottom: 24}}>Recipe Recommendation</h2>
+      <h2 className="headline-small">Recipe Recommendation</h2>
       <div className="recomendation-desc">
-        Please fill in the necessary information about your desired nutrition mode.
+        Enter your desired nutritional values and ingredients to find the perfect recipes.
       </div>
       <form className="recomendation-form" onSubmit={handleSubmit}>
-        <div className="form-row">
-          <div className="form-group">
-            <label>Calories</label>
-            <input name="calories" type="number" value={form.calories} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>Fat</label>
-            <input name="fat" type="number" value={form.fat} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>Carbohydrates</label>
-            <input name="carbohydrates" type="number" value={form.carbohydrates} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>Protein</label>
-            <input name="protein" type="number" value={form.protein} onChange={handleChange} required />
+        <div className="form-section">
+          <h3 className="section-title">Nutritional Preferences</h3>
+          <div className="form-grid">
+            <div className="form-group">
+              <label className="form-label">Calories (kcal)</label>
+              <input
+                name="calories"
+                type="number"
+                value={form.calories}
+                onChange={handleChange}
+                required
+                placeholder="e.g., 500"
+                className="form-input"
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Fat (g)</label>
+              <input
+                name="fat"
+                type="number"
+                value={form.fat}
+                onChange={handleChange}
+                required
+                placeholder="e.g., 20"
+                className="form-input"
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Carbohydrates (g)</label>
+              <input
+                name="carbohydrates"
+                type="number"
+                value={form.carbohydrates}
+                onChange={handleChange}
+                required
+                placeholder="e.g., 50"
+                className="form-input"
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Protein (g)</label>
+              <input
+                name="protein"
+                type="number"
+                value={form.protein}
+                onChange={handleChange}
+                required
+                placeholder="e.g., 30"
+                className="form-input"
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Cholesterol (mg)</label>
+              <input
+                name="cholesterol"
+                type="number"
+                value={form.cholesterol}
+                onChange={handleChange}
+                required
+                placeholder="e.g., 100"
+                className="form-input"
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Sodium (mg)</label>
+              <input
+                name="sodium"
+                type="number"
+                value={form.sodium}
+                onChange={handleChange}
+                required
+                placeholder="e.g., 500"
+                className="form-input"
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Fiber (g)</label>
+              <input
+                name="fiber"
+                type="number"
+                value={form.fiber}
+                onChange={handleChange}
+                required
+                placeholder="e.g., 10"
+                className="form-input"
+              />
+            </div>
           </div>
         </div>
-        <div className="form-row">
-          <div className="form-group">
-            <label>Cholesterol</label>
-            <input name="cholesterol" type="number" value={form.cholesterol} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>Sodium</label>
-            <input name="sodium" type="number" value={form.sodium} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>Fiber</label>
-            <input name="fiber" type="number" value={form.fiber} onChange={handleChange} required />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="form-group" style={{flex: 1}}>
-            <label>Ingredients (comma separated)</label>
-            <input name="ingredients" type="text" value={form.ingredients} onChange={handleChange} required />
+        <div className="form-section">
+          <h3 className="section-title">Ingredients</h3>
+          <div className="form-group form-group-full">
+            <label className="form-label">Ingredients (comma separated)</label>
+            <textarea
+              name="ingredients"
+              value={form.ingredients}
+              onChange={handleChange}
+              required
+              placeholder="e.g., chicken, rice, broccoli"
+              className="form-input form-textarea"
+            />
           </div>
         </div>
-        <button type="submit" className="btn btn-primary" disabled={loading} style={{marginTop: 16, minWidth: 120}}>
-          {loading ? "Loading..." : "Recommend"}
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={loading}
+        >
+          {loading ? (
+            <span className="loading-spinner"></span>
+          ) : (
+            "Find Recipes"
+          )}
         </button>
       </form>
       {recipes && recipes.length > 0 && (
         <div className="recomendation-banner">
-          3 products suitable for your nutrition mode
+          {recipes.length} recipes found for your preferences
         </div>
       )}
-      {error && <div style={{ color: "red", marginTop: 16 }}>{error}</div>}
-      <div className="grid-list" data-grid-list style={{marginTop: 32}}>
+      {error && <div className="error-message">{error}</div>}
+      <div className="grid-list">
         {recipes && recipes.length > 0 && recipes.map(recipe => (
           <div className="col" key={recipe.id}>
             <RecipeCard recipe={recipe} />
@@ -114,4 +187,5 @@ function Recomendation() {
     </div>
   );
 }
+
 export default Recomendation;
